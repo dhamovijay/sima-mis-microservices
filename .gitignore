@@ -1,0 +1,37 @@
+# Java / Maven
+**/target/
+*.class
+*.jar
+*.war
+*.log
+*.iml
+.idea/
+*.swp
+
+# Spring Boot
+**/HELP.md
+
+# Eclipse / STS
+.metadata/
+**/.classpath
+**/.project
+**/.settings/
+**/.factorypath
+
+# Node / Angular
+**/node_modules/
+**/dist/
+**/.angular/
+sima-ui/.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Environment
+**/.env
+**/application-local.properties
+
+# Ignore the reference BASE folder
+sima-ui-BASE/

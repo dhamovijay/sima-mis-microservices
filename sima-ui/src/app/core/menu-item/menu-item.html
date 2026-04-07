@@ -1,0 +1,15 @@
+<div
+  class="menu-item"
+  [class.expanded]="expanded"
+  routerLinkActive="active"
+  (click)="toggle()"
+>
+  <span class="menu-text">{{ item.title }}</span>
+  <span *ngIf="item.children" class="arrow">{{ expanded ? '▾' : '▸' }}</span>
+</div>
+
+<ul class="submenu" [class.show]="expanded" *ngIf="item.children">
+  <li *ngFor="let child of item.children">
+    <app-menu-item [item]="child" (closeSidebar)="closeSidebar.emit()"></app-menu-item>
+  </li>
+</ul>

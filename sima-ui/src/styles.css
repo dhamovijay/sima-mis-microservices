@@ -1,0 +1,41 @@
+/* === Global page layout fixes === */
+html, body, #root, app-root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Prevent global page scroll — layout handles it internally */
+html, body {
+  overflow: hidden;
+}
+
+/* Scrollable content area (like main screen or report container) */
+.scrollable {
+  overflow-y: auto;                /* ✅ enables vertical scrolling */
+  overflow-x: hidden;              /* prevent horizontal scrollbars */
+  -webkit-overflow-scrolling: touch;
+  height: 100%;
+}
+
+/* ✅ Show scrollbar only when content exceeds container height */
+.scrollable {
+  scrollbar-width: thin;           /* for Firefox */
+  scrollbar-color: rgba(100, 100, 100, 0.5) transparent;
+}
+
+/* Hide scrollbar when not needed */
+.scrollable::-webkit-scrollbar {
+  width: 8px;
+}
+.scrollable::-webkit-scrollbar-thumb {
+  background: rgba(120, 120, 120, 0.4);
+  border-radius: 6px;
+}
+.scrollable::-webkit-scrollbar-thumb:hover {
+  background: rgba(120, 120, 120, 0.6);
+}
+.scrollable::-webkit-scrollbar-track {
+  background: transparent;
+}

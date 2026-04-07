@@ -1,0 +1,23 @@
+<aside class="sidebar" [class.open]="isOpen">
+  <div class="brand">
+    <div class="logo">SIMA</div>
+    <span>SIMA Monitoring</span>
+  </div>
+
+  <nav class="menu">
+    <ul>
+      <li *ngFor="let item of menu">
+        <app-menu-item [item]="item" (closeSidebar)="closeSidebar.emit()"></app-menu-item>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- <div class="bottom">
+    <button class="theme-switch" (click)="toggleTheme()">
+      {{ isDark ? '☀️ Light Mode' : '🌙 Dark Mode' }}
+    </button>
+  </div> -->
+</aside>
+
+<div class="overlay" *ngIf="isOpen" (click)="closeSidebar.emit()"></div>
+

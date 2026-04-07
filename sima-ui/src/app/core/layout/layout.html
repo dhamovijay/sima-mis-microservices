@@ -1,0 +1,26 @@
+
+<div class="app" [class.dark-theme]="isDark">
+  <app-sidebar
+    [isOpen]="sidebarOpen"
+    (closeSidebar)="sidebarOpen = false"
+    (themeChange)="isDark = $event"
+  ></app-sidebar>
+
+  <div class="main-content">
+    <header class="topbar">
+      <button class="menu-btn" (click)="toggleSidebar()">☰</button>
+      <h1 class="app-title">Reporting Dashboard</h1>
+      <div>
+      <button class="theme-btn" (click)="logout()">Logout</button>
+      <button class="theme-btn" (click)="toggleTheme()">
+      {{ isDark ? '☀️ Light Mode' : '🌙 Dark Mode' }}
+      </button>
+      </div>
+    </header>
+
+    <main class="screen-area"> 
+      <router-outlet></router-outlet>
+    </main>
+    <app-footer></app-footer>
+  </div>
+</div>

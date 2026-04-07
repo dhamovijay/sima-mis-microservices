@@ -1,0 +1,224 @@
+/* Overall page background with the animated chart */
+.login-page-background {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+}
+
+/* ECharts background container */
+.background-chart {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Glass container styling */
+.glass-container {
+  position: relative;
+  z-index: 2;
+  width: 90%;
+  max-width: 450px;
+  padding: 40px 30px;
+  border-radius: 20px;
+  
+  /* --- CORE GLASSMORPHISM EFFECT --- */
+  background: rgba(255, 255, 255, 0);
+  backdrop-filter: blur(5px); /* Increased blur for better effect */
+  -webkit-backdrop-filter: blur(15px); /* For Safari */
+  border: 0px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  /* ---------------------------------- */
+  
+  color: #fff;
+  text-align: center;
+}
+
+/* Welcome heading */
+.login-form h1 {
+  margin-bottom: 30px;
+  font-size: 2.2em;
+  font-weight: 500;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Input group styling */
+.input-group {
+  margin-bottom: 25px;
+}
+
+.input-group input {
+  width: calc(100% - 20px);
+  padding: 12px 10px;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 1.1em;
+  outline: none;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-group input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.input-group input:focus {
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+}
+
+.input-group input.error {
+  border: 1px solid #ff6b6b;
+  background: rgba(255, 107, 107, 0.1);
+}
+
+/* Error message styling */
+.error-message {
+  color: #ff6b6b;
+  text-align: center;
+  margin: 1rem 0;
+  font-size: 14px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+/* Login button styling */
+.login-button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.login-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.login-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Forgot Password / Sign Up links */
+
+
+.links-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+  
+.links-group a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+/* Divider for social login */
+.divider {
+  margin: 30px 0;
+  position: relative;
+  text-align: center;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 40%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.divider::before {
+  left: 0;
+}
+
+.divider::after {
+  right: 0;
+}
+
+.divider-text {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0 10px;
+  font-size: 0.9em;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Social Login Icons */
+.social-login {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.social-icon {
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.social-icon:hover {
+  transform: scale(1.05);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.social-icon img {
+  width: 30px;
+  height: 30px;
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+  .glass-container {
+    width: 95%;
+    padding: 30px 20px;
+    margin: 20px;
+  }
+  
+  .login-form h1 {
+    font-size: 1.8em;
+  }
+  
+  .input-group input {
+    font-size: 1em;
+  }
+  
+  .login-button {
+    font-size: 1.1em;
+    padding: 12px;
+  }
+}
+
+.forgot-password, .sign-up {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+.forgot-password:hover, .sign-up:hover {
+  color: white;
+}
