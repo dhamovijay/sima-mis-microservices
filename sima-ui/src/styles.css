@@ -1,41 +1,43 @@
-/* === Global page layout fixes === */
-html, body, #root, app-root {
-  height: 100%;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* === Global Reset & Base === */
+*, *::before, *::after {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
-/* Prevent global page scroll — layout handles it internally */
 html, body {
-  overflow: hidden;
-}
-
-/* Scrollable content area (like main screen or report container) */
-.scrollable {
-  overflow-y: auto;                /* ✅ enables vertical scrolling */
-  overflow-x: hidden;              /* prevent horizontal scrollbars */
-  -webkit-overflow-scrolling: touch;
   height: 100%;
+  width: 100%;
+  overflow: hidden;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 14px;
 }
 
-/* ✅ Show scrollbar only when content exceeds container height */
+#root, app-root {
+  height: 100%;
+  width: 100%;
+  display: block;
+}
+
+/* === Scrollable Areas === */
 .scrollable {
-  scrollbar-width: thin;           /* for Firefox */
-  scrollbar-color: rgba(100, 100, 100, 0.5) transparent;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(100, 100, 100, 0.3) transparent;
 }
 
-/* Hide scrollbar when not needed */
-.scrollable::-webkit-scrollbar {
-  width: 8px;
-}
-.scrollable::-webkit-scrollbar-thumb {
-  background: rgba(120, 120, 120, 0.4);
-  border-radius: 6px;
-}
-.scrollable::-webkit-scrollbar-thumb:hover {
-  background: rgba(120, 120, 120, 0.6);
-}
-.scrollable::-webkit-scrollbar-track {
-  background: transparent;
-}
+.scrollable::-webkit-scrollbar { width: 5px; }
+.scrollable::-webkit-scrollbar-thumb { background: rgba(120, 120, 120, 0.3); border-radius: 6px; }
+.scrollable::-webkit-scrollbar-thumb:hover { background: rgba(120, 120, 120, 0.5); }
+.scrollable::-webkit-scrollbar-track { background: transparent; }
+
+::selection { background: rgba(56, 189, 248, 0.3); color: inherit; }
+
+/* === Prevent images from overflowing (not canvas — ECharts manages its own) === */
+img, video { max-width: 100%; height: auto; }

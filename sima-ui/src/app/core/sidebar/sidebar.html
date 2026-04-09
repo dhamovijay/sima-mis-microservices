@@ -1,7 +1,14 @@
 <aside class="sidebar" [class.open]="isOpen">
   <div class="brand">
-    <div class="logo">SIMA</div>
-    <span>SIMA Monitoring</span>
+    <div class="brand-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round">
+        <path d="M3 18h18M6 12h12M9 6h6"/>
+      </svg>
+    </div>
+    <div class="brand-text">
+      <span class="brand-name">SIMA</span>
+      <span class="brand-sub">Monitoring</span>
+    </div>
   </div>
 
   <nav class="menu">
@@ -12,12 +19,9 @@
     </ul>
   </nav>
 
-  <!-- <div class="bottom">
-    <button class="theme-switch" (click)="toggleTheme()">
-      {{ isDark ? '☀️ Light Mode' : '🌙 Dark Mode' }}
-    </button>
-  </div> -->
+  <div class="sidebar-footer">
+    <div class="version-tag">v1.0.0</div>
+  </div>
 </aside>
 
 <div class="overlay" *ngIf="isOpen" (click)="closeSidebar.emit()"></div>
-

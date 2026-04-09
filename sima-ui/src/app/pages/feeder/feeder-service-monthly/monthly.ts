@@ -44,6 +44,7 @@ export class Monthly implements OnInit, OnDestroy {
 
   private leftChart: echarts.ECharts | null = null;
   private syncCharts: echarts.ECharts[] = [];
+  private resizeObserver: ResizeObserver | null = null;
 
   year: string;
   month: string;
@@ -85,13 +86,22 @@ export class Monthly implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.leftChart?.dispose();
     this.syncCharts.forEach((c) => c.dispose());
+    this.resizeObserver?.disconnect();
     window.removeEventListener('resize', this.onResize);
   }
 
   private onResize = () => {
-    this.leftChart?.resize();
-    this.syncCharts.forEach((c) => c.resize());
+    requestAnimationFrame(() => {
+      this.leftChart?.resize();
+      this.syncCharts.forEach((c) => c.resize());
+    });
   };
+
+  private observeResize(el: HTMLElement) {
+    this.resizeObserver?.disconnect();
+    this.resizeObserver = new ResizeObserver(() => this.onResize());
+    this.resizeObserver.observe(el);
+  }
 
   get chartLabel(): string {
     return `Services in ${MONTH_SHORT[this.month] || ''}-${this.year}`;
@@ -127,6 +137,7 @@ export class Monthly implements OnInit, OnDestroy {
     this.leftChart?.dispose();
     this.leftChart = echarts.init(this.leftChartEl.nativeElement);
     window.addEventListener('resize', this.onResize);
+    this.observeResize(this.leftChartEl.nativeElement);
 
     const colors = COLOR_PALETTES[this.selectedPalette];
     const categories = this.serviceList.map((s) => s.serviceShortCode);

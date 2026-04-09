@@ -1,0 +1,33 @@
+<div class="page-container">
+  <div class="page-title">Customer 360</div>
+
+  <div class="filter-row">
+    <div class="filter-group">
+      <label>Customer</label>
+      <select [(ngModel)]="selectedCustomer" class="filter-input filter-select" [disabled]="dropdownLoading">
+        <option value="">{{ dropdownLoading ? 'Loading...' : 'Select Customer' }}</option>
+        <option *ngFor="let c of customers" [value]="c.id">{{ c.text }}</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label>Year</label>
+      <input type="text" [(ngModel)]="year" placeholder="e.g. 2025" class="filter-input" />
+    </div>
+    <button class="btn-primary" (click)="search()" [disabled]="!selectedCustomer || !year">Search</button>
+  </div>
+
+  <div *ngIf="loading" class="loading-state">Loading customer data...</div>
+
+  <div *ngIf="!loading && searched && (revenueData.length > 0 || teusData.length > 0)" class="chart-grid">
+    <div class="chart-card">
+      <div #revenueChart class="chart-area"></div>
+    </div>
+    <div class="chart-card">
+      <div #teusChart class="chart-area"></div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && searched && revenueData.length === 0 && teusData.length === 0" class="empty-state">
+    No data found for the selected customer and year.
+  </div>
+</div>

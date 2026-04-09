@@ -2,6 +2,10 @@ package com.mis.feeder.voyagePerformanceTracker;
 
 public interface voyagePerformanceTrackerDao {
 
+	voyagePerformanceTrackerResultBean getDropdowns();
+	voyagePerformanceTrackerResultBean getVesselsByService(String sectorId);
 	voyagePerformanceTrackerResultBean getChartData(voyagePerformanceTrackerBean vptBean);
+	voyagePerformanceTrackerResultBean getSpeedometerData(voyagePerformanceTrackerBean vptBean);
+	voyagePerformanceTrackerResultBean getScatterData(voyagePerformanceTrackerBean vptBean);
 
 }

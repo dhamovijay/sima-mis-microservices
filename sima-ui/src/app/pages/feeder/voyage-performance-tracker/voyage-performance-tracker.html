@@ -1,0 +1,55 @@
+<div class="page-container">
+  <div class="page-title">Voyage Performance Tracker</div>
+
+  <!-- Filter Section -->
+  <div class="filter-card">
+    <div class="filter-fields">
+      <div class="form-group">
+        <label for="service">Service</label>
+        <select id="service" [(ngModel)]="selectedService" (ngModelChange)="onServiceChange()" [disabled]="dropdownLoading">
+          <option value="">-- Select Service --</option>
+          <option *ngFor="let s of services" [value]="s.id">{{ s.text }}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="vessel">Vessel</label>
+        <select id="vessel" [(ngModel)]="selectedVessel" [disabled]="!selectedService || vesselLoading">
+          <option value="">{{ vesselLoading ? 'Loading...' : '-- Select Vessel --' }}</option>
+          <option *ngFor="let v of vessels" [value]="v.id">{{ v.text }}</option>
+        </select>
+      </div>
+
+      <button class="filter-btn" (click)="loadData()" [disabled]="loading || !selectedService || !selectedVessel">
+        <span *ngIf="!loading">Filter</span>
+        <span *ngIf="loading">Loading...</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Charts: 2x2 grid + 1 full width -->
+  <div class="chart-grid" *ngIf="hasData">
+    <div class="chart-card">
+      <div #durationChart class="chart-area"></div>
+    </div>
+    <div class="chart-card">
+      <div #loadingChart class="chart-area"></div>
+    </div>
+    <div class="chart-card">
+      <div #marginChart class="chart-area"></div>
+    </div>
+    <div class="chart-card">
+      <div #revenueChart class="chart-area"></div>
+    </div>
+  </div>
+
+  <!-- 5th chart: Loading Concentration (full width) -->
+  <div class="chart-card chart-full" *ngIf="hasData">
+    <div #concentrationChart class="chart-area-wide"></div>
+  </div>
+
+  <!-- Empty state -->
+  <div class="empty-state" *ngIf="!hasData && !loading && !dropdownLoading">
+    Select a Service and Vessel, then click Filter to view charts.
+  </div>
+</div>

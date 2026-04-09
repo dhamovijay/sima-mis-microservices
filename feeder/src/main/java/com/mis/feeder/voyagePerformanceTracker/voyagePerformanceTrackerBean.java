@@ -5,7 +5,9 @@ import java.util.List;
 
 public class voyagePerformanceTrackerBean {
 
-	private String vesselId;
+	private String id;
+    private String text;
+    private String vesselId;
     private String sectorId;
     private String voyageId;
     
@@ -17,6 +19,10 @@ public class voyagePerformanceTrackerBean {
     private Double totalProformaVoyDays;
     private Double totalActualDays;
     private Double totalBlended;
+    private String customer;
+    private Double totalCustValue;
+    private String customerShotCode;
+    private String vesselName;
     
     private List<Double> totalTeusList = new ArrayList<Double>();
     private List<Double> totalRevenueList = new ArrayList<Double>();
@@ -28,6 +34,19 @@ public class voyagePerformanceTrackerBean {
     private List<String> monthList = new ArrayList<String>();
     
     
+	public String getId() { return id; }
+	public void setId(String id) { this.id = id; }
+	public String getText() { return text; }
+	public void setText(String text) { this.text = text; }
+	public String getCustomer() { return customer; }
+	public void setCustomer(String customer) { this.customer = customer; }
+	public Double getTotalCustValue() { return totalCustValue; }
+	public void setTotalCustValue(Double totalCustValue) { this.totalCustValue = totalCustValue; }
+	public String getCustomerShotCode() { return customerShotCode; }
+	public void setCustomerShotCode(String customerShotCode) { this.customerShotCode = customerShotCode; }
+	public String getVesselName() { return vesselName; }
+	public void setVesselName(String vesselName) { this.vesselName = vesselName; }
+
 	public String getVesselId() {
 		return vesselId;
 	}

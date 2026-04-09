@@ -1,0 +1,64 @@
+<div class="page-container">
+  <div class="page-title">Port Flow</div>
+
+  <div class="filter-row">
+    <div class="filter-group">
+      <label>Year</label>
+      <input type="text" [(ngModel)]="year" placeholder="e.g. 2025" class="filter-input" />
+    </div>
+    <div class="filter-group">
+      <label>Month</label>
+      <select [(ngModel)]="month" class="filter-input">
+        <option *ngFor="let m of months" [value]="m.value">{{ m.label }}</option>
+      </select>
+    </div>
+    <button class="btn-primary" (click)="loadData()">Search</button>
+  </div>
+
+  <div *ngIf="loading" class="loading-state">Loading port flow data...</div>
+
+  <div *ngIf="!loading && dataList.length > 0" class="content-grid">
+    <!-- Sankey Chart -->
+    <div class="chart-card">
+      <div #sankeyChart class="chart-area-large"></div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-card">
+      <div class="table-header">
+        <h3>Port Flow Details</h3>
+        <span class="badge">{{ dataList.length }} routes</span>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>POL</th>
+              <th>POD</th>
+              <th>Sector</th>
+              <th class="num">TEUs</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of dataList">
+              <td>{{ row.pol }}</td>
+              <td>{{ row.pod }}</td>
+              <td>{{ row.sector }}</td>
+              <td class="num">{{ row.teus | number:'1.0-0' }}</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr class="total-row">
+              <td colspan="3"><strong>Total</strong></td>
+              <td class="num"><strong>{{ totalTeus | number:'1.0-0' }}</strong></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && dataList.length === 0" class="empty-state">
+    No port flow data found for the selected period.
+  </div>
+</div>

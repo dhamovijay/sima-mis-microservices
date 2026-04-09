@@ -31,7 +31,14 @@ export class SidebarComponent {
       title: 'Feeder',
       children: [
         { title: 'Feeder Service Monthly', route: '/feeder/feeder-service-monthly' },
-        { title: 'Yearly', route: '/feeder/yearly' }
+        { title: 'Weekly Voyage Summary', route: '/feeder/weekly-voyage-summary' },
+        { title: 'Voyage Performance Tracker', route: '/feeder/voyage-performance-tracker' },
+        { title: 'Port Traffic', route: '/feeder/port-traffic' },
+        { title: 'Port Flow', route: '/feeder/port-flow' },
+        { title: 'Vessel Monthly Report', route: '/feeder/vessel-monthly-report' },
+        { title: 'Port Performance', route: '/feeder/port-performance' },
+        { title: 'Customer 360', route: '/feeder/customer-360' },
+        { title: 'Blended Rate', route: '/feeder/blended-rate' },
       ]
     },
     { title: 'Settings', route: '/settings' }

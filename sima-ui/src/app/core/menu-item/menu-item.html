@@ -1,11 +1,15 @@
 <div
   class="menu-item"
-  [class.expanded]="expanded"
+  [class.active]="!item.children && item.route"
   routerLinkActive="active"
+  [class.has-children]="item.children"
   (click)="toggle()"
 >
   <span class="menu-text">{{ item.title }}</span>
-  <span *ngIf="item.children" class="arrow">{{ expanded ? '▾' : '▸' }}</span>
+  <svg *ngIf="item.children" class="arrow-icon" [class.rotated]="expanded"
+    width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+    <polyline points="6 9 12 15 18 9"/>
+  </svg>
 </div>
 
 <ul class="submenu" [class.show]="expanded" *ngIf="item.children">

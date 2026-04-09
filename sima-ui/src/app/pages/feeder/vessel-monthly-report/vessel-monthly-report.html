@@ -1,0 +1,116 @@
+<div class="page-container">
+  <div class="page-title">
+    <span *ngIf="selectedVessel" class="back-link" (click)="goBack()">&larr; All Vessels</span>
+    <span *ngIf="!selectedVessel">Vessel Monthly Report</span>
+    <span *ngIf="selectedVessel">{{ selectedVessel.vesselName }} - Cost Breakdown</span>
+  </div>
+
+  <!-- Vessel List -->
+  <div *ngIf="!selectedVessel">
+    <div *ngIf="loading" class="loading-state">Loading vessel data...</div>
+
+    <div class="vessel-grid" *ngIf="!loading && vesselList.length > 0">
+      <div class="vessel-card" *ngFor="let v of vesselList" (click)="selectVessel(v)">
+        <div class="vessel-name">{{ v.vesselName }}</div>
+        <div class="vessel-code">{{ v.vesselCode }}</div>
+        <div class="vessel-details">
+          <div class="detail-row" *ngIf="v.service">
+            <span class="detail-label">Service</span>
+            <span class="detail-value">{{ v.service }}</span>
+          </div>
+          <div class="detail-row" *ngIf="v.flag">
+            <span class="detail-label">Flag</span>
+            <span class="detail-value">{{ v.flag }}</span>
+          </div>
+          <div class="detail-row" *ngIf="v.build">
+            <span class="detail-label">Built</span>
+            <span class="detail-value">{{ v.build }}</span>
+          </div>
+          <div class="detail-row" *ngIf="v.nominalTeus">
+            <span class="detail-label">TEU Capacity</span>
+            <span class="detail-value">{{ v.nominalTeus }}</span>
+          </div>
+        </div>
+        <div class="vessel-action">View Costs &rarr;</div>
+      </div>
+    </div>
+
+    <div *ngIf="!loading && vesselList.length === 0" class="empty-state">
+      No vessel data available.
+    </div>
+  </div>
+
+  <!-- Cost Breakdown -->
+  <div *ngIf="selectedVessel">
+    <!-- Vessel Info Card -->
+    <div class="info-card">
+      <div class="info-grid">
+        <div class="info-item" *ngIf="selectedVessel.service">
+          <span class="info-label">Service</span>
+          <span class="info-value">{{ selectedVessel.service }}</span>
+        </div>
+        <div class="info-item" *ngIf="selectedVessel.flag">
+          <span class="info-label">Flag</span>
+          <span class="info-value">{{ selectedVessel.flag }}</span>
+        </div>
+        <div class="info-item" *ngIf="selectedVessel.build">
+          <span class="info-label">Built</span>
+          <span class="info-value">{{ selectedVessel.build }}</span>
+        </div>
+        <div class="info-item" *ngIf="selectedVessel.normalCapacity">
+          <span class="info-label">Capacity</span>
+          <span class="info-value">{{ selectedVessel.normalCapacity }}</span>
+        </div>
+        <div class="info-item" *ngIf="selectedVessel.bookValue">
+          <span class="info-label">Book Value</span>
+          <span class="info-value">{{ selectedVessel.bookValue }}</span>
+        </div>
+        <div class="info-item" *ngIf="selectedVessel.marketValue">
+          <span class="info-label">Market Value</span>
+          <span class="info-value">{{ selectedVessel.marketValue }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="costLoading" class="loading-state">Loading cost breakdown...</div>
+
+    <!-- Cost Tables -->
+    <div class="cost-tables" *ngIf="!costLoading">
+      <div class="table-card" *ngFor="let table of costTables">
+        <div class="table-header">
+          <h3>{{ table.title }}</h3>
+          <span class="badge">{{ getTableTotal(table.data) | number:'1.0-0' }}</span>
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Description</th>
+                <th *ngIf="table.data[0]?.costPeriod" class="num">Period</th>
+                <th class="num">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of table.data">
+                <td>{{ row.expenseName || row.costName }}</td>
+                <td *ngIf="table.data[0]?.costPeriod" class="num">{{ row.costPeriod }}</td>
+                <td class="num">{{ (row.amount || row.totalAmount || 0) | number:'1.0-0' }}</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr class="total-row">
+                <td><strong>Total</strong></td>
+                <td *ngIf="table.data[0]?.costPeriod"></td>
+                <td class="num"><strong>{{ getTableTotal(table.data) | number:'1.0-0' }}</strong></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+      <div *ngIf="costTables.length === 0" class="empty-state">
+        No cost data available for this vessel.
+      </div>
+    </div>
+  </div>
+</div>

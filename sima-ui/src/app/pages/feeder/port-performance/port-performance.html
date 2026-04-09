@@ -1,0 +1,62 @@
+<div class="page-container">
+  <div class="page-title">Port Performance</div>
+
+  <div class="filter-row">
+    <div class="filter-group">
+      <label>Voyage ID</label>
+      <input
+        type="text"
+        [(ngModel)]="voyageId"
+        placeholder="Enter voyage ID"
+        class="filter-input"
+        (keydown)="onKeydown($event)"
+      />
+    </div>
+    <button class="btn-primary" (click)="search()">Search</button>
+  </div>
+
+  <div *ngIf="loading" class="loading-state">Loading performance data...</div>
+
+  <div *ngIf="!loading && searched && dataList.length > 0" class="chart-grid">
+    <div class="chart-card">
+      <div #utilizationChart class="chart-area"></div>
+    </div>
+    <div class="chart-card">
+      <div #loadingChart class="chart-area"></div>
+    </div>
+  </div>
+
+  <!-- Data table -->
+  <div class="table-card" *ngIf="!loading && searched && loadingList.length > 0">
+    <div class="table-header">
+      <h3>Port Details</h3>
+      <span class="badge">{{ loadingList.length }} ports</span>
+    </div>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Port</th>
+            <th class="num">Loaded TEUs</th>
+            <th class="num">Discharged TEUs</th>
+            <th class="num">Onboard TEUs</th>
+            <th class="num">Utilization %</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of loadingList; let i = index">
+            <td>{{ categories[i] || row.pol }}</td>
+            <td class="num">{{ row.loadedteus | number:'1.0-0' }}</td>
+            <td class="num">{{ row.dischargedteus | number:'1.0-0' }}</td>
+            <td class="num">{{ row.onboardteus | number:'1.0-0' }}</td>
+            <td class="num">{{ (dataList[i]?.averageutilization || 0) | number:'1.1-1' }}%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && searched && dataList.length === 0" class="empty-state">
+    No performance data found for voyage "{{ voyageId }}".
+  </div>
+</div>

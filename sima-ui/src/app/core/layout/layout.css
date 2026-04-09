@@ -1,92 +1,135 @@
-/* === Main Layout === */
+/* === Theme Variables === */
 :root {
-  --bg: #f5f7fa;
-  --text: #1e293b;
+  --bg: #f8fafc;
+  --bg-secondary: #ffffff;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --accent: #0ea5e9;
+  --accent-hover: #0284c7;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --radius: 10px;
 }
 
 .dark-theme {
-  --bg: #0f172a;
+  --bg: #0c1222;
+  --bg-secondary: #131c31;
   --text: #e2e8f0;
+  --text-muted: #94a3b8;
+  --border: rgba(255, 255, 255, 0.08);
+  --accent: #38bdf8;
+  --accent-hover: #0ea5e9;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
+/* === App Shell === */
 .app {
   display: flex;
   background: var(--bg);
   color: var(--text);
-  min-height: 100vh;
+  height: 100vh;
   overflow: hidden;
+  transition: background 0.3s, color 0.3s;
 }
 
+/* === Main Content === */
 .main-content {
   flex: 1;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  margin-left: 200px; /* ensures content is not behind sidebar */
-  transition: margin 0.3s ease;
+  height: 100vh;
+  min-width: 0;
+  overflow: hidden;
 }
 
-/* Topbar */
+/* === Topbar === */
 .topbar {
-  height: 60px;
+  height: 52px;
+  min-height: 52px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
-  backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.3);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  z-index: 100;
 }
 
-.dark-theme .topbar {
-  background: rgba(30, 41, 59, 0.5);
+.topbar-left, .topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
 }
 
-/* Buttons */
+.app-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .menu-btn {
   display: none;
   background: none;
   border: none;
-  font-size: 26px;
   cursor: pointer;
   color: var(--text);
-}
-
-.theme-btn {
-  background: linear-gradient(135deg, #38bdf8, #2563eb);
-  color: white;
-  border: none;
+  width: 34px;
+  height: 34px;
   border-radius: 8px;
-  padding: 6px 14px;
-  cursor: pointer;
-  font-size: 14px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.2s;
 }
 
-/* Main area */
+.menu-btn:hover { background: var(--border); }
+
+.topbar-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 5px 12px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  transition: all 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.topbar-btn:hover { color: var(--text); background: var(--border); }
+.topbar-btn.logout { color: #ef4444; border-color: rgba(239, 68, 68, 0.2); }
+.topbar-btn.logout:hover { background: rgba(239, 68, 68, 0.06); border-color: rgba(239, 68, 68, 0.3); }
+
+/* === Screen Area === */
 .screen-area {
   flex: 1;
-  /* display: flex;
-  justify-content: flex-start;
-  align-items: flex-start; */
-  padding: 15px;
-  overflow-y: auto;      /* ✅ allows internal scrolling */
-  height: 100%;
+  padding: 16px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
   box-sizing: border-box;
 }
 
-/* Hide scrollbar globally */
-::-webkit-scrollbar {
-  width: 0;
-  height: 0;
-}
-
-/* Responsive behavior */
-@media (max-width: 900px) {
-  .menu-btn {
-    display: block;
-  }
-
-  .main-content {
-    margin-left: 0;
-  }
+/* === Desktop: sidebar always visible, handled by sidebar component === */
+/* === Mobile: sidebar slides over === */
+@media (max-width: 768px) {
+  .menu-btn { display: flex; }
+  .topbar { padding: 0 12px; }
+  .screen-area { padding: 10px; }
+  .topbar-btn span { display: none; }
+  .topbar-btn { padding: 5px 8px; }
 }

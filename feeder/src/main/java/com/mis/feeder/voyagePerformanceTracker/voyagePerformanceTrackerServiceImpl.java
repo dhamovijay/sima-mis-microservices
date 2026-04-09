@@ -10,9 +10,28 @@ public class voyagePerformanceTrackerServiceImpl implements voyagePerformanceTra
 	voyagePerformanceTrackerDao vptDao;
 	
 	@Override
+	public voyagePerformanceTrackerResultBean getDropdowns() {
+		return vptDao.getDropdowns();
+	}
+
+	@Override
+	public voyagePerformanceTrackerResultBean getVesselsByService(String sectorId) {
+		return vptDao.getVesselsByService(sectorId);
+	}
+
+	@Override
 	public voyagePerformanceTrackerResultBean getChartData(voyagePerformanceTrackerBean vptBean) {
-		// TODO Auto-generated method stub
 		return vptDao.getChartData(vptBean);
+	}
+
+	@Override
+	public voyagePerformanceTrackerResultBean getSpeedometerData(voyagePerformanceTrackerBean vptBean) {
+		return vptDao.getSpeedometerData(vptBean);
+	}
+
+	@Override
+	public voyagePerformanceTrackerResultBean getScatterData(voyagePerformanceTrackerBean vptBean) {
+		return vptDao.getScatterData(vptBean);
 	}
 
 }

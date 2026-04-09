@@ -1,0 +1,58 @@
+<div class="page-container">
+  <div class="page-title">Blended Rate</div>
+
+  <div class="filter-row">
+    <div class="filter-group">
+      <label>Year</label>
+      <input type="text" [(ngModel)]="year" placeholder="e.g. 2025" class="filter-input" />
+    </div>
+    <button class="btn-primary" (click)="search()" [disabled]="!year">Search</button>
+  </div>
+
+  <div *ngIf="loading" class="loading-state">Loading blended rate data...</div>
+
+  <!-- Chart -->
+  <div *ngIf="!loading && searched && graphList.length > 0" class="chart-card">
+    <div #rateChart class="chart-area"></div>
+  </div>
+
+  <!-- Table -->
+  <div class="table-card" *ngIf="!loading && searched && tableList.length > 0">
+    <div class="table-header">
+      <h3>Monthly Breakdown</h3>
+      <span class="badge">{{ tableList.length }} months</span>
+    </div>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Month</th>
+            <th class="num">Revenue</th>
+            <th class="num">TEUs</th>
+            <th class="num">Blended Rate</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of tableList">
+            <td>{{ row.montext }}</td>
+            <td class="num">{{ row.revenue | number:'1.0-0' }}</td>
+            <td class="num">{{ row.tues | number:'1.0-0' }}</td>
+            <td class="num">{{ row.rate | number:'1.0-2' }}</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr class="total-row">
+            <td><strong>Total</strong></td>
+            <td class="num"><strong>{{ totalRevenue | number:'1.0-0' }}</strong></td>
+            <td class="num"><strong>{{ totalTues | number:'1.0-0' }}</strong></td>
+            <td class="num"><strong>{{ totalTues > 0 ? (totalRevenue / totalTues | number:'1.0-2') : '-' }}</strong></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && searched && graphList.length === 0 && tableList.length === 0" class="empty-state">
+    No blended rate data found for {{ year }}.
+  </div>
+</div>

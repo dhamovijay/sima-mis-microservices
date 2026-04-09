@@ -1,48 +1,52 @@
-<div class="login-page-background">
-  <!-- ECharts Background Container -->
+<div class="login-page">
   <div id="login-background-chart" class="background-chart"></div>
-  
-  <div class="glass-container">
+
+  <div class="login-card">
+    <div class="login-brand">
+      <div class="login-logo">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round">
+          <path d="M3 18h18M6 12h12M9 6h6"/>
+        </svg>
+      </div>
+      <h1>SIMA</h1>
+      <p>Monitoring System</p>
+    </div>
+
     <form class="login-form" (ngSubmit)="login()" #loginForm="ngForm">
-      <h1>Welcome</h1>
-
-      <div class="input-group">
-        <input 
-          type="text" 
-          placeholder="Username" 
-          [(ngModel)]="username" 
-          name="username" 
+      <div class="field">
+        <label for="username">Username</label>
+        <input
+          id="username"
+          type="text"
+          placeholder="Enter your username"
+          [(ngModel)]="username"
+          name="username"
           (input)="onInputChange()"
           required
-          class="form-control"
-          [class.error]="errorMessage" />
+          [class.error]="errorMessage"
+        />
       </div>
 
-      <div class="input-group">
-        <input 
-          type="password" 
-          placeholder="Password" 
-          [(ngModel)]="password" 
-          name="password" 
+      <div class="field">
+        <label for="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          placeholder="Enter your password"
+          [(ngModel)]="password"
+          name="password"
           (input)="onInputChange()"
           required
-          class="form-control"
-          [class.error]="errorMessage" />
+          [class.error]="errorMessage"
+        />
       </div>
 
-      <!-- Error Message -->
-      <div *ngIf="errorMessage" class="error-message">
-        {{ errorMessage }}
-      </div>
+      <div *ngIf="errorMessage" class="error-msg">{{ errorMessage }}</div>
 
-      <button type="submit" class="login-button" [disabled]="isLoading || !username || !password">
-        {{ isLoading ? 'Logging in...' : 'Login' }}
+      <button type="submit" class="submit-btn" [disabled]="isLoading || !username || !password">
+        <span *ngIf="!isLoading">Sign In</span>
+        <span *ngIf="isLoading" class="spinner"></span>
       </button>
-
-      <div class="links-group">
-        <!-- <a href="#" class="forgot-password">Forgot Password ?</a> -->
-        <!-- <a href="#" class="sign-up">Sign Up</a> -->
-      </div>
     </form>
   </div>
 </div>

@@ -16,6 +16,35 @@ public class voyagePerformanceTrackerDaoImpl implements voyagePerformanceTracker
 	@Autowired
 	DataSource dataSource;
 
+	@Override
+	public voyagePerformanceTrackerResultBean getDropdowns() {
+		voyagePerformanceTrackerResultBean resBean = new voyagePerformanceTrackerResultBean();
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		try {
+			String serviceQuery = "select distinct sector_code as id, sector_code as text from vessel_service_teus_weight_dtls where sector_code in (select distinct sector_id from voyage_gfs where sch_start_date::date >= now()::date - 720) order by 1";
+			List<voyagePerformanceTrackerBean> serviceList = jdbcTemplate.query(serviceQuery, new BeanPropertyRowMapper<>(voyagePerformanceTrackerBean.class));
+			resBean.setServiceList(serviceList);
+			resBean.setSuccess(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return resBean;
+	}
+
+	public voyagePerformanceTrackerResultBean getVesselsByService(String sectorId) {
+		voyagePerformanceTrackerResultBean resBean = new voyagePerformanceTrackerResultBean();
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		try {
+			String vesselQuery = "select distinct vessel_name as id, vessel_name as text from vessel_service_teus_weight_dtls where vessel_code in (select distinct vessel_id from voyage_gfs where sch_start_date::date >= now()::date - 720) and sector_code = ? order by 1";
+			List<voyagePerformanceTrackerBean> vesselList = jdbcTemplate.query(vesselQuery, new Object[]{sectorId}, new BeanPropertyRowMapper<>(voyagePerformanceTrackerBean.class));
+			resBean.setVesselList(vesselList);
+			resBean.setSuccess(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return resBean;
+	}
+
 	@SuppressWarnings("deprecation")
 	@Override
 	public voyagePerformanceTrackerResultBean getChartData(voyagePerformanceTrackerBean vptBean) {
@@ -205,12 +234,44 @@ public class voyagePerformanceTrackerDaoImpl implements voyagePerformanceTracker
 	public voyagePerformanceTrackerBean getValuesMarginList(List<voyagePerformanceTrackerBean> csrBeans) {
 		voyagePerformanceTrackerBean bean = new voyagePerformanceTrackerBean();
 		for (voyagePerformanceTrackerBean csrBean : csrBeans) {
-			
 			bean.addVoyageListValues(csrBean.getVoyageId());
-			
-			bean.addRevenueListValues(csrBean.getTotalRevenue()); 
+			bean.addRevenueListValues(csrBean.getTotalRevenue());
 		}
 		return bean;
+	}
+
+	@Override
+	public voyagePerformanceTrackerResultBean getSpeedometerData(voyagePerformanceTrackerBean vptBean) {
+		voyagePerformanceTrackerResultBean resBean = new voyagePerformanceTrackerResultBean();
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		try {
+			String query = "select * from vw_get_voyage_performance_weight_speedometer_graph(?, ?, ?)";
+			List<voyagePerformanceTrackerBean> list = jdbcTemplate.query(query,
+				new Object[]{vptBean.getSectorId(), vptBean.getVesselId(), vptBean.getVoyageId()},
+				new BeanPropertyRowMapper<>(voyagePerformanceTrackerBean.class));
+			resBean.setVoyageWeightList(list);
+			resBean.setSuccess(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return resBean;
+	}
+
+	@Override
+	public voyagePerformanceTrackerResultBean getScatterData(voyagePerformanceTrackerBean vptBean) {
+		voyagePerformanceTrackerResultBean resBean = new voyagePerformanceTrackerResultBean();
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		try {
+			String query = "select * from vw_get_voyage_performance_revenues_scatter_graph(?, ?, ?, ?)";
+			resBean.setMloScatterPlotList(jdbcTemplate.query(query, new Object[]{vptBean.getSectorId(), vptBean.getVesselId(), "MLO", vptBean.getVoyageId()}, new BeanPropertyRowMapper<>(voyagePerformanceTrackerBean.class)));
+			resBean.setAgentScatterPlotList(jdbcTemplate.query(query, new Object[]{vptBean.getSectorId(), vptBean.getVesselId(), "AGENT", vptBean.getVoyageId()}, new BeanPropertyRowMapper<>(voyagePerformanceTrackerBean.class)));
+			resBean.setNvoccScatterPlotList(jdbcTemplate.query(query, new Object[]{vptBean.getSectorId(), vptBean.getVesselId(), "NVOCC", vptBean.getVoyageId()}, new BeanPropertyRowMapper<>(voyagePerformanceTrackerBean.class)));
+			resBean.setJvScatterPlotList(jdbcTemplate.query(query, new Object[]{vptBean.getSectorId(), vptBean.getVesselId(), "JV", vptBean.getVoyageId()}, new BeanPropertyRowMapper<>(voyagePerformanceTrackerBean.class)));
+			resBean.setSuccess(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return resBean;
 	}
 
 }

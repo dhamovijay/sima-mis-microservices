@@ -20,48 +20,27 @@
         <span *ngIf="!loading">Filter</span>
         <span *ngIf="loading">Loading...</span>
       </button>
-
-      <!-- Palette Selector -->
-      <div class="palette-selector" *ngIf="serviceList.length > 0">
-        <label>Theme</label>
-        <div class="palette-options">
-          <button
-            *ngFor="let key of paletteKeys"
-            class="palette-btn"
-            [class.active]="selectedPalette === key"
-            (click)="changePalette(key)"
-            [title]="key"
-          >
-            <span class="palette-preview"
-              *ngFor="let color of [0, 1, 2]"
-              [style.background]="key">
-            </span>
-          </button>
-        </div>
-      </div>
     </div>
   </div>
 
-  <!-- Charts Area -->
-  <div class="charts-wrapper" *ngIf="serviceList.length > 0">
-    <!-- Left Chart: Variwide / Bar Chart -->
-    <div class="chart-panel left-panel">
-      <div #leftChart class="chart-canvas"></div>
+  <!-- Main Bar Chart -->
+  <div class="chart-panel" *ngIf="serviceList.length > 0">
+    <div #leftChart class="chart-canvas"></div>
+    <div class="chart-hint" *ngIf="!showSync">
+      Click on a service bar to view 24-month breakup charts
     </div>
+  </div>
 
-    <!-- Right Charts: Synchronized breakup charts -->
-    <div class="chart-panel right-panel" *ngIf="showSync">
-      <div class="sync-chart-wrapper">
-        <div #volumeChart class="sync-chart"></div>
-        <div #blendedChart class="sync-chart"></div>
-        <div #marginChart class="sync-chart"></div>
-      </div>
+  <!-- Breakup Charts (below main chart, side by side) -->
+  <div class="sync-row" *ngIf="showSync">
+    <div class="sync-panel">
+      <div #volumeChart class="sync-chart-full"></div>
     </div>
-
-    <div class="chart-panel right-panel hint-panel" *ngIf="!showSync">
-      <div class="hint-text">
-        Click on a service bar to view 24-month breakup charts
-      </div>
+    <div class="sync-panel">
+      <div #blendedChart class="sync-chart-full"></div>
+    </div>
+    <div class="sync-panel">
+      <div #marginChart class="sync-chart-full"></div>
     </div>
   </div>
 

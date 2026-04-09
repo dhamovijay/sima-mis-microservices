@@ -1,0 +1,44 @@
+.page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 400px;
+}
+
+.placeholder-card {
+  background: var(--bg-secondary, #fff);
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: 10px;
+  padding: 48px 32px;
+  text-align: center;
+  max-width: 420px;
+  width: 100%;
+}
+
+.placeholder-icon {
+  color: var(--text-muted, #94a3b8);
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.placeholder-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text, #0f172a);
+  margin-bottom: 4px;
+}
+
+.placeholder-subtitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent, #0ea5e9);
+  margin-bottom: 16px;
+}
+
+.placeholder-text {
+  font-size: 13px;
+  color: var(--text-muted, #94a3b8);
+  line-height: 1.5;
+}

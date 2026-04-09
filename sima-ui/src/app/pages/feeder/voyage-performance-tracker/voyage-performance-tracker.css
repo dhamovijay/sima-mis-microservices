@@ -1,0 +1,123 @@
+.page-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.page-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text, #0f172a);
+}
+
+/* Filter */
+.filter-card {
+  background: var(--bg-secondary, #fff);
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: 10px;
+  padding: 12px 20px;
+}
+
+.filter-fields {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  min-width: 180px;
+  flex: 1;
+  max-width: 300px;
+}
+
+label {
+  font-size: 0.85rem;
+  color: var(--text);
+  margin-bottom: 0.3rem;
+}
+
+select {
+  background: var(--bg);
+  border: 1px solid var(--border, #3b4a67);
+  color: var(--text);
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 0.9rem;
+  outline: none;
+  font-family: inherit;
+  transition: 0.2s;
+}
+
+select:focus {
+  border-color: var(--accent, #0ea5e9);
+  box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.15);
+}
+
+.filter-btn {
+  background: var(--accent, #0ea5e9);
+  border: none;
+  color: #fff;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: 0.2s;
+}
+
+.filter-btn:hover { opacity: 0.85; }
+.filter-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Charts */
+.chart-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.chart-card {
+  background: var(--bg-secondary, #fff);
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.chart-area {
+  width: 100%;
+  height: 320px;
+}
+
+.chart-full {
+  width: 100%;
+}
+
+.chart-area-wide {
+  width: 100%;
+  height: 350px;
+}
+
+.loading-state, .empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  color: var(--text-muted, #94a3b8);
+  font-size: 14px;
+  font-style: italic;
+}
+
+@media (max-width: 900px) {
+  .chart-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+  .filter-fields { flex-direction: column; align-items: stretch; }
+  .form-group { max-width: none; min-width: 0; }
+  .filter-btn { width: 100%; }
+  .chart-area { height: 260px; }
+}

@@ -1,5 +1,53 @@
- <div class="map-container">
-  <div class="map-frame">
-    <div id="map"></div>
+<div class="dashboard-container">
+  <!-- Map -->
+  <div class="map-container">
+    <div class="map-frame">
+      <div id="map"></div>
+    </div>
+
+    <!-- Status bar overlay -->
+    <div class="status-bar">
+      <div class="status-item">
+        <span class="status-dot" [class.connected]="isConnected" [class.disconnected]="!isConnected"></span>
+        {{ isConnected ? 'Live' : 'Disconnected' }}
+      </div>
+      <div class="status-item">
+        Ships: <strong>{{ vesselCount }}</strong>
+      </div>
+      <div class="status-item">
+        Messages: <strong>{{ messageCount }}</strong>
+      </div>
+      <button class="control-btn" (click)="togglePause()">
+        {{ isPaused ? '▶ Resume' : '⏸ Pause' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Vessel Panel -->
+  <div class="vessel-panel" *ngIf="vesselCount > 0">
+    <div class="panel-header">
+      <h3>Tracked Vessels</h3>
+      <span class="vessel-badge">{{ vesselCount }}</span>
+    </div>
+    <div class="vessel-list">
+      <div
+        class="vessel-item"
+        *ngFor="let v of vesselList"
+        (click)="focusVessel(v.mmsi)"
+      >
+        <div class="vessel-name">{{ v.name }}</div>
+        <div class="vessel-detail">
+          <span class="vessel-speed">{{ v.sog.toFixed(1) }} kn</span>
+          <span class="vessel-status-dot" [style.background]="v.status === 0 ? '#22c55e' : v.status === 1 ? '#f59e0b' : v.status === 5 ? '#3b82f6' : '#22c55e'"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Legend -->
+    <div class="legend">
+      <div class="legend-item"><span class="legend-dot" style="background:#22c55e;"></span> Underway</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#f59e0b;"></span> At Anchor</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#3b82f6;"></span> Moored</div>
+    </div>
   </div>
 </div>

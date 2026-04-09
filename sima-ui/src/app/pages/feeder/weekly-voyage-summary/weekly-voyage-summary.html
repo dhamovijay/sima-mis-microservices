@@ -1,0 +1,143 @@
+<div class="page-container">
+  <!-- Breadcrumb -->
+  <div class="breadcrumb">
+    <span
+      *ngFor="let crumb of breadcrumb; let last = last"
+      class="crumb"
+      [class.active]="last"
+      (click)="!last && onBreadcrumbClick(crumb.level)"
+    >
+      {{ crumb.label }}
+      <span *ngIf="!last" class="separator">/</span>
+    </span>
+    <span *ngIf="showTable" class="crumb active">
+      <span class="separator">/</span> {{ selectedWeekLabel }}
+    </span>
+  </div>
+
+  <!-- Chart -->
+  <div class="chart-card">
+    <div *ngIf="loading" class="loading-state">Loading chart data...</div>
+    <div #chart class="chart-area" [style.display]="loading ? 'none' : 'block'"></div>
+    <div class="chart-hint" *ngIf="!loading && drillLevel === 'week'">
+      Click a week bar to view voyage details
+    </div>
+  </div>
+
+  <!-- Tables -->
+  <div class="tables-section" *ngIf="showTable">
+    <div *ngIf="tableLoading" class="loading-state">Loading voyages...</div>
+
+    <!-- Own Voyages -->
+    <div class="table-card" *ngIf="!tableLoading && ownVoyages.length > 0">
+      <div class="table-header">
+        <h3>Own Voyages</h3>
+        <span class="badge">{{ ownVoyages.length }}</span>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Sector</th>
+              <th>Vessel</th>
+              <th>Voyage</th>
+              <th class="num">TEUs</th>
+              <th>TEUs Graph</th>
+              <th class="num">Revenue</th>
+              <th>Revenue Graph</th>
+              <th class="num">Margin</th>
+              <th>Margin Graph</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let v of ownVoyages; let i = index">
+              <td>{{ v.sector }}</td>
+              <td>{{ v.vessel }}</td>
+              <td>{{ v.voyage }}</td>
+              <td class="num">{{ v.teus | number:'1.0-0' }}</td>
+              <td class="spark-cell">
+                <canvas class="sparkline" width="120" height="28"
+                  [attr.data-values]="v.teusChart"
+                  [attr.data-color]="'#ABB2B9'"
+                  [attr.data-label]="'TEUs'"></canvas>
+              </td>
+              <td class="num">{{ v.revenue | number:'1.0-0' }}</td>
+              <td class="spark-cell">
+                <canvas class="sparkline" width="120" height="28"
+                  [attr.data-values]="v.revenueChart"
+                  [attr.data-color]="'#02b202'"
+                  [attr.data-label]="'Revenue'"></canvas>
+              </td>
+              <td class="num" [class.negative]="(v.margin || 0) < 0">{{ v.margin | number:'1.0-0' }}</td>
+              <td class="spark-cell">
+                <canvas class="sparkline" width="120" height="28"
+                  [attr.data-values]="v.marginChart"
+                  [attr.data-color]="'#3b82f6'"
+                  [attr.data-negcolor]="'#ef4444'"
+                  [attr.data-label]="'Margin'"></canvas>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Third Party Voyages -->
+    <div class="table-card" *ngIf="!tableLoading && thirdPartyVoyages.length > 0">
+      <div class="table-header">
+        <h3>Third Party Voyages</h3>
+        <span class="badge secondary">{{ thirdPartyVoyages.length }}</span>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Sector</th>
+              <th>Vessel</th>
+              <th>Voyage</th>
+              <th class="num">TEUs</th>
+              <th>TEUs Graph</th>
+              <th class="num">Revenue</th>
+              <th>Revenue Graph</th>
+              <th class="num">Margin</th>
+              <th>Margin Graph</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let v of thirdPartyVoyages; let i = index">
+              <td>{{ v.sector }}</td>
+              <td>{{ v.vessel }}</td>
+              <td>{{ v.voyage }}</td>
+              <td class="num">{{ v.teus | number:'1.0-0' }}</td>
+              <td class="spark-cell">
+                <canvas class="sparkline" width="120" height="28"
+                  [attr.data-values]="v.teusChart"
+                  [attr.data-color]="'#ABB2B9'"
+                  [attr.data-label]="'TEUs'"></canvas>
+              </td>
+              <td class="num">{{ v.revenue | number:'1.0-0' }}</td>
+              <td class="spark-cell">
+                <canvas class="sparkline" width="120" height="28"
+                  [attr.data-values]="v.revenueChart"
+                  [attr.data-color]="'#02b202'"
+                  [attr.data-label]="'Revenue'"></canvas>
+              </td>
+              <td class="num" [class.negative]="(v.margin || 0) < 0">{{ v.margin | number:'1.0-0' }}</td>
+              <td class="spark-cell">
+                <canvas class="sparkline" width="120" height="28"
+                  [attr.data-values]="v.marginChart"
+                  [attr.data-color]="'#3b82f6'"
+                  [attr.data-negcolor]="'#ef4444'"
+                  [attr.data-label]="'Margin'"></canvas>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="empty-state" *ngIf="!tableLoading && ownVoyages.length === 0 && thirdPartyVoyages.length === 0">
+      No voyage data for {{ selectedWeekLabel }}.
+    </div>
+  </div>
+</div>
